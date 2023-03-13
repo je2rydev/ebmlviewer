@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "library/ebmlparser.h"
+#include "library/exmlnode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,11 +16,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setDatainTable();
+    void loadEbmlParser();
 
 private slots:
     void on_searchBtn_clicked();
 
 private:
+    void parsingNode(EXMLNode* node);
+    void setEbmlTable(EXMLDocument* doc);
+    void TableWidgetDisplay();
     Ui::MainWindow *ui;
+    int elementCount =  0;
+//    std::vector<QString> nodeTags;
+    QMap<QString, int> nodeTags;
 };
+
+
 #endif // MAINWINDOW_H

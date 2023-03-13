@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+#MESSAGE ("dlasldasldlasdlasldlasl asdasd")
+#MESSAGE ( ${CMAKE_INSTALL_LIBDIR} )
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -42,7 +45,8 @@ else()
     endif()
 endif()
 
-target_link_libraries(ebmlparser PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+# CMAKE_INSTALL_FULL_
+target_link_libraries(ebmlparser PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${CMAKE_CURRENT_SOURCE_DIR}/library/libebmlparser.a -L${CMAKE_CURRENT_SOURCE_DIR})
 
 set_target_properties(ebmlparser PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -59,3 +63,7 @@ install(TARGETS ebmlparser
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(ebmlparser)
 endif()
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/library/ebml.xml
+     DESTINATION ${PROJECT_BINARY_DIR}/ebmlparser.app/Contents/MacOS)
+
